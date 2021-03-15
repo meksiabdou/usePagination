@@ -1,0 +1,38 @@
+{
+  "name": "@meksiabdou/usepagination",
+  "version": "1.0.0",
+  "description": "Hook UsePagination for reactjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meksiabdou/usePagination.git"
+  },
+  "keywords": [
+    "reactjs",
+    "hooks",
+    "pagintaion",
+    "fetch"
+  ],
+  "author": "meksiabdou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meksiabdou/usePagination/issues"
+  },
+  "homepage": "https://github.com/meksiabdou/usePagination#readme",
+  "dependencies": {
+    "query-string": "^6.14.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.0.1"
+  }
+}
