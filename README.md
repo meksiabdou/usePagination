@@ -94,6 +94,15 @@ const Stores = () => {
         onPageChange: onPageChange,
         headers : headers,
     });
+
+    return (<div>
+        {
+            data.map((item, index) => {
+                return <p key={index}>{item.name}</p>
+            })
+        }
+        <button onclick={paginate}>more - page {page} / {pageCount}</button>
+    </div>);
 }
 
 export default Stores;
