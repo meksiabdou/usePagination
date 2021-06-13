@@ -1,14 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react";
-import queryString from 'query-string';
+const { useState, useEffect } = require("react");
+const FormData = require("form-data");
+const fetch = require("node-fetch");
 
 async function _fetch(links, data, headers) {
+  var formdata = new FormData();
 
-  data = "?" + queryString.stringify(data);
+  for (let key in data) {
+    if (data[key] !== undefined && data[key] !== null) {
+      formdata.append(key, data[key]);
+    }
+  }
 
   headers = {
     method: "GET",
     ...headers,
+    body: formdata,
   };
 
   try {
@@ -16,8 +23,8 @@ async function _fetch(links, data, headers) {
     let responseJson = await response.json();
     if (response.status === 200) {
       return {
-          ...responseJson,
-          status : true,
+        ...responseJson,
+        status: true,
       };
     } else {
       return {
@@ -40,14 +47,7 @@ async function _fetch(links, data, headers) {
   }
 }
 
-const usePagination = ({
-  url,
-  query,
-  count,
-  page,
-  onPageChange,
-  headers
-}) => {
+const usePagination = ({ url, query, count, page, onPageChange, headers }) => {
   query = query ? query : {};
   page = page ? parseInt(page) : 1;
   count = count ? count : 10;
@@ -116,11 +116,10 @@ const usePagination = ({
     setPage,
     data,
     loading,
-    moreLoading : more,
+    moreLoading: more,
     pageCount,
     paginate,
   };
 };
 
-export default usePagination;
-
+module.exports = usePagination;
