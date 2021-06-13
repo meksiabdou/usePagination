@@ -15,13 +15,12 @@ async function _fetch(links, data, headers) {
 
     for (let key in headers) {
       if (headers[key] !== undefined && headers[key] !== null && key !== "method") {
-        myHeaders.append(key, data[key]);
+        myHeaders.append(key, headers[key]);
       }
     }
 
-    requestOptions.headers = myHeaders;
 
-    if(headers.method.toLocaleUpperCase() === "POST")
+    if(requestOptions.method.toLocaleUpperCase() === "POST")
     {
       var formdata = new FormData();
 
@@ -33,12 +32,14 @@ async function _fetch(links, data, headers) {
       requestOptions.body = formdata;
     }
 
-    if(headers.method.toLocaleUpperCase() === "GET")
+    if(requestOptions.method.toLocaleUpperCase() === "GET")
     {
       links = `${links}?${new URLSearchParams(data).toString()}`
     }
 
-    let response = await fetch(links, headers);
+    requestOptions.headers = myHeaders;
+
+    let response = await fetch(links, requestOptions);
     let responseJson = await response.json();
     if (response.status === 200) {
       return {
@@ -55,6 +56,7 @@ async function _fetch(links, data, headers) {
       };
     }
   } catch (error) {
+    console.log(error);
     return {
       status: false,
       data: [],
