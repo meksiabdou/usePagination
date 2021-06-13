@@ -4,22 +4,41 @@ const FormData = require("form-data");
 const fetch = require("node-fetch");
 
 async function _fetch(links, data, headers) {
-  var formdata = new FormData();
-
-  for (let key in data) {
-    if (data[key] !== undefined && data[key] !== null) {
-      formdata.append(key, data[key]);
-    }
-  }
-
-  headers = {
-    method: "GET",
-    ...headers,
-    body: formdata,
-  };
 
   try {
-    let response = await fetch(links + data, headers);
+
+    var myHeaders = new Headers();
+
+    const requestOptions = {
+      method: headers.method ? headers.method : 'GET',
+    };
+
+    for (let key in headers) {
+      if (headers[key] !== undefined && headers[key] !== null && key !== "method") {
+        myHeaders.append(key, data[key]);
+      }
+    }
+
+    requestOptions.headers = myHeaders;
+
+    if(headers.method.toLocaleUpperCase() === "POST")
+    {
+      var formdata = new FormData();
+
+      for (let key in data) {
+        if (data[key] !== undefined && data[key] !== null) {
+          formdata.append(key, data[key]);
+        }
+      }
+      requestOptions.body = formdata;
+    }
+
+    if(headers.method.toLocaleUpperCase() === "GET")
+    {
+      links = `${links}?${new URLSearchParams(data).toString()}`
+    }
+
+    let response = await fetch(links, headers);
     let responseJson = await response.json();
     if (response.status === 200) {
       return {
